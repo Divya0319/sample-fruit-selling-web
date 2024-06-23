@@ -26,7 +26,12 @@ public class AppStartupConfig {
         jwtConfig.setRequiredTokenPrefix("Bearer");
 
         // Add excluded URLs
-        jwtConfig.addExcludedUrl("/auth/login");       
+        jwtConfig.addExcludedUrl("/auth/login");   
+        jwtConfig.addExcludedUrl("/v3/api-docs/*");
+        jwtConfig.addExcludedUrl("/swagger-resources/**");
+        jwtConfig.addExcludedUrl("/swagger-ui/*");
+        jwtConfig.addExcludedUrl("/webjars/**");
+        jwtConfig.addExcludedUrl("/favicon.ico");
 
         // Add authenticated URLs
         jwtConfig.addAuthenticatedUrl("/api/fruits/**");
