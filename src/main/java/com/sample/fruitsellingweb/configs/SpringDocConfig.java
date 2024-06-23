@@ -33,6 +33,7 @@ public class SpringDocConfig {
 		GroupedOpenApi groupOpenApi =  GroupedOpenApi.builder()
                 .group("sample-fruit-selling-api")
                 .packagesToScan("com.sample.fruitsellingweb.controllers")
+                .addOpenApiCustomizer(customizeOpenApi())    // very crucial step, never miss it
                 .build();
 		return groupOpenApi;
 	}
