@@ -15,11 +15,22 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class UserLoginConfig {
     @Bean
     public UserDetailsService userDetailsService() {
-        UserDetails userDetails = User.builder().
+        UserDetails divyaUser = User.builder().
                 username("Divya")
                 .password(passwordEncoder().encode("divya")).roles("ADMIN").
                 build();
-        return new InMemoryUserDetailsManager(userDetails);
+        
+        UserDetails johnUser = User.builder().
+        		username("John")
+        		.password(passwordEncoder().encode("john123")).roles("USER")
+        		.build();
+        
+        UserDetails aliceUser = User.builder().
+        		username("Alice")
+        		.password(passwordEncoder().encode("alice123")).roles("USER")
+        		.build();
+        
+        return new InMemoryUserDetailsManager(divyaUser, johnUser, aliceUser);
     }
 
     @Bean

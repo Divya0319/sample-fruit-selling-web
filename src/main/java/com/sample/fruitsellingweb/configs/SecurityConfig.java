@@ -34,7 +34,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authorize -> {
                 jwtConfig.getExcludedUrls().forEach(url -> authorize.requestMatchers(url).permitAll());
-                jwtConfig.getAuthenticatedUrls().forEach(url -> authorize.requestMatchers(url).authenticated());
+                jwtConfig.getAuthenticatedUrls().forEach(url -> authorize.requestMatchers(url).hasRole("ADMIN"));
                 authorize.anyRequest().authenticated();
             })
             .exceptionHandling(ex -> ex.authenticationEntryPoint(authEntryPoint))
