@@ -12,6 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.sample.fruitsellingweb.filters.JwtAuthFilter;
+import com.sample.fruitsellingweb.helpers.CustomAccessDeniedHandler;
 import com.sample.fruitsellingweb.helpers.JwtAuthenticationEntryPoint;
 import com.sample.fruitsellingweb.helpers.UrlPatternConverter;
 
@@ -22,6 +23,9 @@ public class SecurityConfig {
 	
 	@Autowired
 	private JwtAuthenticationEntryPoint authEntryPoint;
+	
+	@Autowired
+	private CustomAccessDeniedHandler accessDeniedHandler;
 	
 	@Autowired
 	private JwtAuthFilter authFilter;
@@ -37,7 +41,10 @@ public class SecurityConfig {
                 jwtConfig.getAuthenticatedUrls().forEach(url -> authorize.requestMatchers(url).hasRole("ADMIN"));
                 authorize.anyRequest().authenticated();
             })
-            .exceptionHandling(ex -> ex.authenticationEntryPoint(authEntryPoint))
+            .exceptionHandling(ex -> {
+            	ex.authenticationEntryPoint(authEntryPoint);
+            	ex.accessDeniedHandler(accessDeniedHandler);
+            	})
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         
         List<String> convertedUrls = new ArrayList<>();
